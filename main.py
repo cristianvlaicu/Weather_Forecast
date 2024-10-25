@@ -1,4 +1,4 @@
-    # Create a web app of weather forecast.
+    # Create a web app of weather forecast with some interactive feautures.
 
 import streamlit as st
 import plotly.express as px
