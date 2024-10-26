@@ -80,7 +80,7 @@ try:
             ]
 
             # display the list temp_hours under each weather symbol:
-            st.image(image_paths, temp_hours, width=125)
+            st.image(image_paths, temp_hours, width=115)
 
 except KeyError:
     st.markdown(
