@@ -75,12 +75,12 @@ try:
 
             # join strings lists day_hours and temperatures in one string list and finally
             temp_hours = [
-                f" On: {day_hour}  {temperature}"
+                f"{day_hour}  {temperature}"
                 for day_hour, temperature in zip(day_hours, temperatures)
             ]
 
             # display the list temp_hours under each weather symbol:
-            st.image(image_paths, temp_hours, width=140)
+            st.image(image_paths, temp_hours, width=125)
 
 except KeyError:
     st.markdown(
