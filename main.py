@@ -7,7 +7,7 @@ import datetime
 
 # Add title, text input, slider, selectbox, and subheader
 st.title("Weather Forecast for the Next Days:")
-place = st.text_input("Place:")
+place = st.text_input("City:")
 
 try:
     # Create a slider who allow ass to select between 1 ad 5 days, sliding a bar with the mouse.
@@ -18,7 +18,7 @@ try:
         help="Select the number of forecasted days",
     )
 
-    option = st.selectbox("Select data to view", ("Temperature", "Sky"))
+    option = st.selectbox("Select data to view", ("Temperature", "Sky-Date", "Sky-Temperatures"))
     st.subheader(
         f"{option} for the next {days} days in {place}:"
     )  # create dinamyc subheader
@@ -36,11 +36,11 @@ try:
             figure = px.line(
                 x=dates,
                 y=temperatures,
-                labels={"x": "Date", "y": "Temperature (ºC)"},
+                labels={"x": "Date", "y": "Temperature (°C)"},
             )
             st.plotly_chart(figure)
 
-        if option == "Sky":
+        if option == "Sky-Date":
 
             images = {
                 "Clear": "images/clear.png",
@@ -62,8 +62,28 @@ try:
             ]
 
             st.image(image_paths, day_hour, width=140)
+
+        if option == "Sky-Temperatures":
+
+            images = {
+                "Clear": "images/clear.png",
+                "Clouds": "images/cloud.png",
+                "Rain": "images/rain.png",
+                "Snow": "images/snow.png",
+            }
+            sky_conditions = [
+                dict["weather"][0]["main"] for dict in filtered_data
+            ]
+            image_paths = [images[condition] for condition in sky_conditions]
+
+            # extract the dt_txt from filtred_data and, convert it into a datatime object to give it the formatt we want.
+            temperatures = [dict["main"]["temp"] for dict in filtered_data]
+            temperatures = [f"{int(temperature - 273)}°C" for temperature in temperatures]
+
+            st.image(image_paths, temperatures, width=140)
+
 except KeyError:
     st.markdown(
         f"""<h4 style="text-align: center;">Please enter a valid City.</p>""",
-        unsafe_allow_html=True,
+        unsafe_allow_html=True
     )
